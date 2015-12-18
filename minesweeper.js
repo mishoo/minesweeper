@@ -3,7 +3,7 @@ function Minesweeper(nrows, ncols) {
     var board = new Array(boardLength);
     var nbombs = 0;
     for (var i = boardLength; --i >= 0;) {
-        var setBomb = Math.random() <= 0.1;
+        var setBomb = Math.random() <= 0.2;
         if (setBomb) {
             nbombs++;
         }
@@ -158,6 +158,9 @@ function Minesweeper(nrows, ncols) {
         }
         setSeen(row, col);
         setUncover(row, col);
+        if (nearBombs(row, col)) {
+            return;
+        }
         if (row > 0 && !isBomb(row - 1, col)) uncoverArea(row - 1, col);
         if (row < nrows - 1 && !isBomb(row + 1, col)) uncoverArea(row + 1, col);
         if (col > 0 && !isBomb(row, col - 1)) uncoverArea(row, col - 1);
