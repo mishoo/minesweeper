@@ -4,20 +4,21 @@
   display: inline-block;
   border-radius: 4px;
   padding: 1px;
-  font: 13px sans-serif;
+  font: 14px sans-serif;
   text-align: center;
 
   .row {
     .cell {
       display: table-cell;
       vertical-align: middle;
-      width: 20px;
-      height: 20px;
+      width: 23px;
+      height: 23px;
       box-sizing: border-box;
       border-left: 1px solid #888;
       border-top: 1px solid #888;
       background: #aaa;
       color: #4444ff;
+      cursor: default;
 
       &:last-child {
         border-right: 1px solid #888;
@@ -27,11 +28,8 @@
         background: transparent;
       }
 
-      &.bomb {
-        color: #f00;
-        &:after {
-          content: "\01F4A3";
-        }
+      &.fail {
+        color: #f00 !important;
       }
 
       &.flagged {
@@ -39,6 +37,21 @@
         &:after {
           content: "\2691";
         }
+      }
+
+      &.bomb {
+        color: #222;
+        &:after {
+          content: "\01F4A3";
+        }
+        &.flagged {
+          color: #3a3;
+        }
+      }
+
+      &.covered:hover {
+        background: #fd8;
+        cursor: pointer;
       }
     }
     &:last-child {

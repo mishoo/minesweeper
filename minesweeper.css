@@ -4,30 +4,38 @@
   display: inline-block;
   border-radius: 4px;
   padding: 1px;
-  font: 13px sans-serif;
+  font: 14px sans-serif;
   text-align: center; }
   .minesweeper-board .row .cell {
     display: table-cell;
     vertical-align: middle;
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 23px;
     box-sizing: border-box;
     border-left: 1px solid #888;
     border-top: 1px solid #888;
     background: #aaa;
-    color: #4444ff; }
+    color: #4444ff;
+    cursor: default; }
     .minesweeper-board .row .cell:last-child {
       border-right: 1px solid #888; }
     .minesweeper-board .row .cell.uncovered {
       background: transparent; }
-    .minesweeper-board .row .cell.bomb {
-      color: #f00; }
-      .minesweeper-board .row .cell.bomb:after {
-        content: "\01F4A3"; }
+    .minesweeper-board .row .cell.fail {
+      color: #f00 !important; }
     .minesweeper-board .row .cell.flagged {
       color: #00f; }
       .minesweeper-board .row .cell.flagged:after {
         content: "\2691"; }
+    .minesweeper-board .row .cell.bomb {
+      color: #222; }
+      .minesweeper-board .row .cell.bomb:after {
+        content: "\01F4A3"; }
+      .minesweeper-board .row .cell.bomb.flagged {
+        color: #3a3; }
+    .minesweeper-board .row .cell.covered:hover {
+      background: #fd8;
+      cursor: pointer; }
   .minesweeper-board .row:last-child .cell {
     border-bottom: 1px solid #888; }
   .minesweeper-board.finished {
