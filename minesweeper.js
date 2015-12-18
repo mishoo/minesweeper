@@ -73,18 +73,18 @@ function Minesweeper(nrows, ncols) {
 
     function nearBombs(row, col) {
         var count = 0;
-        if (row > 0) {
-            if (isBomb(row - 1, col)) count++;
+        function add(dr, dc) {
+            var r = row + dr, c = col + dc;
+            if (r >= 0 && r < nrows - 1 &&
+                c >= 0 && c < ncols - 1 &&
+                isBomb(r, c))
+            {
+                count++;
+            }
         }
-        if (row < nrows - 1) {
-            if (isBomb(row + 1, col)) count++;
-        }
-        if (col > 0) {
-            if (isBomb(row, col - 1)) count++;
-        }
-        if (col < ncols - 1) {
-            if (isBomb(row, col + 1)) count++;
-        }
+        add(-1, -1); add(-1, 0); add(-1, 1);
+        add(0, -1); add(0, 1);
+        add(1, -1); add(1, 0); add(1, 1);
         return count;
     }
 
