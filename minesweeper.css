@@ -19,10 +19,19 @@
     .minesweeper-board .row .cell:last-child {
       border-right: 1px solid #888; }
     .minesweeper-board .row .cell.uncovered {
-      background: #fff; }
+      background: transparent; }
     .minesweeper-board .row .cell.bomb {
       color: #f00; }
+      .minesweeper-board .row .cell.bomb:after {
+        content: "\01F4A3"; }
+    .minesweeper-board .row .cell.flagged {
+      color: #00f; }
+      .minesweeper-board .row .cell.flagged:after {
+        content: "\2691"; }
   .minesweeper-board .row:last-child .cell {
     border-bottom: 1px solid #888; }
+  .minesweeper-board.finished {
+    background-color: #ffc;
+    border-color: red; }
 
 /*# sourceMappingURL=minesweeper.css.map */

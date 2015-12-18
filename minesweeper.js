@@ -1,8 +1,13 @@
 function Minesweeper(nrows, ncols) {
     var boardLength = nrows * ncols;
     var board = new Array(boardLength);
+    var nbombs = 0;
     for (var i = boardLength; --i >= 0;) {
-        board[i] = (Math.random() <= 0.1 ? 1 : 0);
+        var setBomb = Math.random() <= 0.1;
+        if (setBomb) {
+            nbombs++;
+        }
+        board[i] = (setBomb ? 1 : 0);
     }
 
     function index(row, col) {
@@ -25,8 +30,37 @@ function Minesweeper(nrows, ncols) {
         return getField(row, col) & 2;
     }
 
-    function uncover(row, col) {
+    function isFlagged(row, col) {
+        return getField(row, col) & 4;
+    }
+
+    function isSeen(row, col) {
+        return getField(row, col) & 8;
+    }
+
+    function setUncover(row, col) {
         setField(row, col, getField(row, col) | 2);
+    }
+
+    function setFlag(row, col) {
+        setField(row, col, getField(row, col) | 4);
+    }
+
+    function unsetFlag(row, col) {
+        setField(row, col, (getField(row, col) | 4) ^ 4);
+    }
+
+    function setSeen(row, col) {
+        setField(row, col, getField(row, col) | 8);
+    }
+
+    function finished() {
+        var f = 0, u = 0;
+        forEach(function(row, col){
+            if (isFlagged(row, col)) f++;
+            if (isUncovered(row, col)) u++;
+        });
+        return f + u == nrows * ncols;
     }
 
     function forEach(f) {
@@ -66,12 +100,12 @@ function Minesweeper(nrows, ncols) {
                     if (isBomb(i, j)) {
                         out += " bomb";
                     }
+                } else if (isFlagged(i, j)) {
+                    out += " flagged";
                 }
                 out += "' data-row='" + i + "' data-col='" + j + "'>";
                 if (isUncovered(i, j)) {
-                    if (isBomb(i, j)) {
-                        out += "&#x1F4A3;";
-                    } else {
+                    if (!isBomb(i, j)) {
                         var count = nearBombs(i, j);
                         if (count > 0) {
                             out += count;
@@ -97,19 +131,49 @@ function Minesweeper(nrows, ncols) {
         if (isUncovered(row, col)) {
             return;
         }
-        uncover(row, col);
+        setUncover(row, col);
         if (isBomb(row, col)) {
             forEach(function(row, col){
-                uncover(row, col);
+                setUncover(row, col);
             });
+        } else {
+            var count = nearBombs(row, col);
+            if (count == 0) {
+                uncoverArea(row, col);
+            }
         }
-        boardEl.innerHTML = renderInner();
+        refresh(boardEl);
     }
 
-    function rightClick(row, col) {
+    function refresh(boardEl) {
+        boardEl.innerHTML = renderInner();
+        if (finished()) {
+            boardEl.classList.add("finished");
+        }
+    }
+
+    function uncoverArea(row, col) {
+        if (isSeen(row, col)) {
+            return;
+        }
+        setSeen(row, col);
+        setUncover(row, col);
+        if (row > 0 && !isBomb(row - 1, col)) uncoverArea(row - 1, col);
+        if (row < nrows - 1 && !isBomb(row + 1, col)) uncoverArea(row + 1, col);
+        if (col > 0 && !isBomb(row, col - 1)) uncoverArea(row, col - 1);
+        if (col < ncols - 1 && !isBomb(row, col + 1)) uncoverArea(row, col + 1);
+    }
+
+    function rightClick(row, col, boardEl) {
         if (isUncovered(row, col)) {
             return;
         }
+        if (isFlagged(row, col)) {
+            unsetFlag(row, col);
+        } else {
+            setFlag(row, col);
+        }
+        refresh(boardEl);
     }
 
     document.addEventListener("mousedown", onMouseDown);

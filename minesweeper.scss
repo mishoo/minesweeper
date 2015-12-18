@@ -24,11 +24,21 @@
       }
 
       &.uncovered {
-        background: #fff;
+        background: transparent;
       }
 
       &.bomb {
         color: #f00;
+        &:after {
+          content: "\01F4A3";
+        }
+      }
+
+      &.flagged {
+        color: #00f;
+        &:after {
+          content: "\2691";
+        }
       }
     }
     &:last-child {
@@ -36,5 +46,10 @@
         border-bottom: 1px solid #888;
       }
     }
+  }
+
+  &.finished {
+    background-color: #ffc;
+    border-color: red;
   }
 }
