@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="minesweeper.css" />
+  </head>
+  <body>
+    <script src="minesweeper.js"></script>
+    <script>
+      var board = new Minesweeper(20, 20);
+      var div = document.createElement("div");
+      div.innerHTML = board.render();
+      document.body.appendChild(div);
+    </script>
+  </body>
+</html>

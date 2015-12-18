@@ -1,0 +1,40 @@
+.minesweeper-board {
+  border: 2px solid #000;
+  margin: 2em;
+  display: inline-block;
+  border-radius: 4px;
+  padding: 1px;
+  font: 13px sans-serif;
+  text-align: center;
+
+  .row {
+    .cell {
+      display: table-cell;
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      box-sizing: border-box;
+      border-left: 1px solid #888;
+      border-top: 1px solid #888;
+      background: #aaa;
+      color: #4444ff;
+
+      &:last-child {
+        border-right: 1px solid #888;
+      }
+
+      &.uncovered {
+        background: #fff;
+      }
+
+      &.bomb {
+        color: #f00;
+      }
+    }
+    &:last-child {
+      .cell {
+        border-bottom: 1px solid #888;
+      }
+    }
+  }
+}
