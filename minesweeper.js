@@ -72,7 +72,7 @@ function Minesweeper(nrows, ncols) {
         }
     }
 
-    function countNear(row, col, pred) {
+    function neighboring(row, col, pred) {
         var count = 0;
         function add(dr, dc) {
             var r = row + dr, c = col + dc;
@@ -90,7 +90,7 @@ function Minesweeper(nrows, ncols) {
     }
 
     function nearBombs(row, col) {
-        return countNear(row, col, isBomb);
+        return neighboring(row, col, isBomb);
     }
 
     // XXX: switch to virtual DOM
@@ -119,7 +119,7 @@ function Minesweeper(nrows, ncols) {
                     if (!isBomb(i, j)) {
                         if (bombs > 0) {
                             body = bombs;
-                            var flags = countNear(i, j, isFlagged);
+                            var flags = neighboring(i, j, isFlagged);
                             if (bombs < flags) {
                                 clss.push("careful");
                             }
@@ -178,14 +178,7 @@ function Minesweeper(nrows, ncols) {
         if (nearBombs(row, col)) {
             return;
         }
-        uncoverArea(row-1, col);
-        uncoverArea(row-1, col-1);
-        uncoverArea(row-1, col+1);
-        uncoverArea(row, col-1);
-        uncoverArea(row, col+1);
-        uncoverArea(row+1, col);
-        uncoverArea(row+1, col-1);
-        uncoverArea(row+1, col+1);
+        neighboring(row, col, uncoverArea);
     }
 
     function rightClick(row, col, boardEl) {
