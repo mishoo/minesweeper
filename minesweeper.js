@@ -72,13 +72,13 @@ function Minesweeper(nrows, ncols) {
         }
     }
 
-    function nearBombs(row, col) {
+    function countNear(row, col, pred) {
         var count = 0;
         function add(dr, dc) {
             var r = row + dr, c = col + dc;
             if (r >= 0 && r < nrows &&
                 c >= 0 && c < ncols &&
-                isBomb(r, c))
+                pred(r, c))
             {
                 count++;
             }
@@ -89,6 +89,10 @@ function Minesweeper(nrows, ncols) {
         return count;
     }
 
+    function nearBombs(row, col) {
+        return countNear(row, col, isBomb);
+    }
+
     // XXX: switch to virtual DOM
     function renderInner() {
         var out = "";
@@ -96,30 +100,33 @@ function Minesweeper(nrows, ncols) {
             out += "<div class='row'>";
             for (var j = 0; j < ncols; ++j) {
                 var bombs = nearBombs(i, j);
-                out += "<div class='cell";
+                var clss = [ "cell" ], body = "";
                 if (isFlagged(i, j)) {
-                    out += " flagged";
+                    clss.push("flagged");
                 }
                 if (isUncovered(i, j)) {
-                    out += " uncovered";
+                    clss.push("uncovered");
                     if (isBomb(i, j)) {
-                        out += " bomb";
+                        clss.push("bomb");
                     }
                 } else {
-                    out += " covered";
+                    clss.push("covered");
                 }
                 if (failrow == i && failcol == j) {
-                    out += " fail";
+                    clss.push("fail");
                 }
-                out += "' data-row='" + i + "' data-col='" + j + "'>";
                 if (isUncovered(i, j)) {
                     if (!isBomb(i, j)) {
                         if (bombs > 0) {
-                            out += bombs;
+                            body = bombs;
+                            var flags = countNear(i, j, isFlagged);
+                            if (bombs < flags) {
+                                clss.push("careful");
+                            }
                         }
                     }
                 }
-                out += "</div>";
+                out += "<div class='" + clss.join(" ") + "' data-row='" + i + "' data-col='" + j + "'>" + body + "</div>";
             }
             out += "</div>";
         }
@@ -135,7 +142,7 @@ function Minesweeper(nrows, ncols) {
     }
 
     function leftClick(row, col, boardEl) {
-        if (isUncovered(row, col)) {
+        if (isUncovered(row, col) || isFlagged(row, col)) {
             return;
         }
         setUncover(row, col);

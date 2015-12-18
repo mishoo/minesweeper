@@ -12,13 +12,13 @@
     width: 23px;
     height: 23px;
     box-sizing: border-box;
-    border-left: 1px solid #888;
-    border-top: 1px solid #888;
-    background: #aaa;
+    border-left: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    background: #ccc;
     color: #4444ff;
     cursor: default; }
     .minesweeper-board .row .cell:last-child {
-      border-right: 1px solid #888; }
+      border-right: 1px solid #aaa; }
     .minesweeper-board .row .cell.uncovered {
       background: transparent; }
     .minesweeper-board .row .cell.fail {
@@ -33,13 +33,16 @@
         content: "\01F4A3"; }
       .minesweeper-board .row .cell.bomb.flagged {
         color: #3a3; }
+    .minesweeper-board .row .cell.careful {
+      color: #c22;
+      font-weight: bold; }
     .minesweeper-board .row .cell.covered:hover {
       background: #fd8;
       cursor: pointer; }
   .minesweeper-board .row:last-child .cell {
     border-bottom: 1px solid #888; }
   .minesweeper-board.finished {
-    background-color: #ffc;
-    border-color: red; }
+    background-color: #dfc;
+    border-color: orange; }
 
 /*# sourceMappingURL=minesweeper.css.map */

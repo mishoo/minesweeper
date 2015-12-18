@@ -14,14 +14,14 @@
       width: 23px;
       height: 23px;
       box-sizing: border-box;
-      border-left: 1px solid #888;
-      border-top: 1px solid #888;
-      background: #aaa;
+      border-left: 1px solid #aaa;
+      border-top: 1px solid #aaa;
+      background: #ccc;
       color: #4444ff;
       cursor: default;
 
       &:last-child {
-        border-right: 1px solid #888;
+        border-right: 1px solid #aaa;
       }
 
       &.uncovered {
@@ -49,6 +49,11 @@
         }
       }
 
+      &.careful {
+        color: #c22;
+        font-weight: bold;
+      }
+
       &.covered:hover {
         background: #fd8;
         cursor: pointer;
@@ -62,7 +67,7 @@
   }
 
   &.finished {
-    background-color: #ffc;
-    border-color: red;
+    background-color: #dfc;
+    border-color: orange;
   }
 }
