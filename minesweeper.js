@@ -122,6 +122,8 @@ function Minesweeper(nrows, ncols) {
                             var flags = neighboring(i, j, isFlagged);
                             if (bombs < flags) {
                                 clss.push("careful");
+                            } else if (bombs == flags) {
+                                clss.push("ready");
                             }
                         }
                     }

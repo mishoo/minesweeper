@@ -36,6 +36,9 @@
     .minesweeper-board .row .cell.careful {
       color: #c22;
       font-weight: bold; }
+    .minesweeper-board .row .cell.ready {
+      color: #2c2;
+      font-weight: bold; }
     .minesweeper-board .row .cell.covered:hover {
       background: #fd8;
       cursor: pointer; }

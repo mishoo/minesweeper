@@ -54,6 +54,11 @@
         font-weight: bold;
       }
 
+      &.ready {
+        color: #2c2;
+        font-weight: bold;
+      }
+
       &.covered:hover {
         background: #fd8;
         cursor: pointer;
